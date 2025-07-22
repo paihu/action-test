@@ -1,0 +1,20 @@
+name: CI for Manifests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+    paths:
+      - "**/manifests/**"
+
+jobs:
+  ci-manifest:
+    uses: ./.github/workflows/test.yaml
+    secrets: inherit
+    with:
+      dir-to-release-name: |
+        {
+          "manifests/foo": "foo",
+          "manifests/test": "bar"
+        }
