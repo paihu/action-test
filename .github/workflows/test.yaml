@@ -55,15 +55,18 @@ jobs:
         run: |
           if [ -z "${{ inputs.dir-to-release-name }}" ]; then
             echo "dir-to-release-name is not set"
-            echo "RELEASE_NAME=app-name" >> $GITHUB_ENV
           else
             if [ -z "${{ fromJSON(inputs.dir-to-release-name)[matrix.dir] }}" ]; then
               echo "release name is not set"
-              echo "RELEASE_NAME=app-name" >> $GITHUB_ENV
             else
               echo "RELEASE_NAME=${{ fromJSON(inputs.dir-to-release-name)[matrix.dir] }}" >> $GITHUB_ENV
             fi
           fi
       - name: show release name
+        if: env.RELEASE_NAME != ""
         run: |
           echo "RELEASE_NAME=${{ env.RELEASE_NAME }}"
+      - name: show dummy name
+        if: env.RELEASE_NAME == ""
+        run: |
+          echo "RELEASE_NAME=dummy"
