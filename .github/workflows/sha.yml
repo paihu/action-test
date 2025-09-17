@@ -1,0 +1,26 @@
+
+name:  sha
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+
+jobs:
+  sha:
+    runs-on: ubuntu-latest
+    env:
+      sha: ${{ github.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: show sha
+        run: |
+          echo "SHA: $sha"
+          echo "SHA: ${{ github.sha }}"
+          echo "SHA: ${{ github.pull_request.head.sha }}"
