@@ -13,13 +13,13 @@ jobs:
   sha:
     runs-on: ubuntu-latest
     env:
-      sha: ${{ github.event.pull_request.head.sha || github.sha }}
+      COMMIT_SHA ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: show sha
         run: |
-          echo "SHA: $sha"
+          echo "SHA: ${{ env.COMMIT_SHA }}"
           echo "SHA: ${{ github.sha }}"
           echo "SHA: ${{ github.event.pull_request.head.sha }}"
